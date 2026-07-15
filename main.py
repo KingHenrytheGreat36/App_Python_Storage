@@ -9,9 +9,8 @@ root = tk.Tk()
 root.title("Python Storage")
 root.geometry("600x400")
 tk.Label(root, text="Welcome to Python Secure(ish) Storage by Henry F.").pack()
-messagebox.showinfo("Success", f"Created")
 
-# --- Frames (Screens) ---
+#region --- Frames (Screens) ---
 login_frame = tk.Frame(root)
 newaccount_row1 = tk.Frame(root)
 newaccount_row2 = tk.Frame(root)
@@ -26,7 +25,7 @@ login_frame.pack()
 #def show_frame(frame):
  #   frame.tkraise()
 
-# END
+#endregion
 def create_account_frame_start():
     login_frame.pack_forget()
     newaccount_row1.pack()
@@ -48,15 +47,19 @@ def create_account_button():
 #  Login_Frame
 tk.Label(login_frame, text="Log in  ").pack(side="left")
 tk.Button(login_frame, text="or Create Acount", command=create_account_frame_start).pack(pady=5)
-# New acount frame
+#region New acount frame
 tk.Label(newaccount_row1, text="Enter your new username  ").pack(side="left")
-newacountusername = tk.Entry(newaccount_row1).pack(side="right")
+newacountusername = tk.Entry(newaccount_row1)
+newacountusername.pack()
 tk.Label(newaccount_row2, text="Enter same password  ").pack(side="left")
-newacountpassword1 = tk.Entry(newaccount_row2).pack()
+newacountpassword1 = tk.Entry(newaccount_row2)
+newacountpassword1.pack()
 tk.Label(newaccount_row3, text="Enter same password  ").pack(side="left")
-newacountpassword2 = tk.Entry(newaccount_row3).pack()
+newacountpassword2 = tk.Entry(newaccount_row3)
+newacountpassword2.pack()
 tk.Button(newaccount_row4, text="Go", command=create_account_button).pack(pady=5)
-
+#endregion
+m
 
 
 
