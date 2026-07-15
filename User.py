@@ -1,7 +1,6 @@
 import shelve
 import hashlib
-import os
-print("Wrong File!") 
+import secrets 
 
 # This is where all of the user profile stuff goes
 
@@ -27,7 +26,7 @@ def Hash(text):
 class User:
     def __init__(self, username, password):
         self.username = username
-        self.salt = os.urandom(16).hex()
+        self.salt = secrets.token_hex(16)
         self.password = self.PassEncrypt(password)
         self.note_count = 0
         self.notes = {}

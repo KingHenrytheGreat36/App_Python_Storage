@@ -1,7 +1,6 @@
 # This is where all functions go 
 from User import *
 
-print("Wrong File.")
 # 5, New Note
 def NewNote(username):
     notewriting = f"You will now create a semi-secure storage cell that's called a Note. Each note is independent and tied to your account ({username}) with us.\nYour name can be anything you want. It is used to read the note later.\nPress enter to cancel note creation at any time.\nWhat would you like the note to be called? "
