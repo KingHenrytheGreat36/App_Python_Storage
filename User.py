@@ -13,12 +13,10 @@ def save_user(user_obj):
             db[user_obj.username] = user_obj
 
 def Hash(text): 
-    salt = "kalsdjfa;jsdlkfjsldjfa;l"
     iterations = 50000
     dk = hashlib.pbkdf2_hmac(
             "sha256",              # underlying hash
             text.lower().encode(), # password
-            salt.encode(),         # salt
             iterations             # stretching
         )
     return dk.hex()
