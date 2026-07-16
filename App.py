@@ -3,12 +3,9 @@ from tkinter import messagebox
 from Primary_System import *
 from User import *
 
-print("Welcome to Python Secure(ish) Storage!")
-print("By Henry F.")
-print("This is an app.")
 root = tk.Tk()
 root.title("Python Storage")
-root.geometry("3200x320")
+root.geometry("450x400")
 tk.Label(root, text="Welcome to Python Secure(ish) Storage by Henry F.").pack()
 
 #region --- Frames (Screens) ---
@@ -35,7 +32,6 @@ def create_account_frame_start():
     login_frame.pack_forget()
     newaccount_frame.pack()
 def SysEnter(user_obj):
-    print("You are now in the system")
     root.withdraw()   # hide window
     restart = MainSystem(user_obj)
     if restart == True:
@@ -44,20 +40,17 @@ def SysEnter(user_obj):
         login_row2.pack()
         login_row3.pack()
     else: 
-        print("The End?")
-        root.destroy()
+        exit()
 
 def create_account_button():
     username = newacountusername.get()   # Make this lower
     password1 = newacountpassword1.get()
     password2 = newacountpassword2.get()
-    print(f"You typed: {username}, {password1}, {password2}")
     if password1.lower() == password2.lower():
         user_obj = User(username.lower(), password1.lower())
         save_user(user_obj)
 
         messagebox.showinfo("Success", f"Account ({username}) Created")
-        print("Account created")
         newaccount_row1.pack_forget()
         newaccount_row2.pack_forget()
         newaccount_row3.pack_forget()
@@ -73,7 +66,6 @@ def login_button():
     except:
         messagebox.showerror("Error", "No such User")
     if user_obj.PassEncrypt(password.lower()) == user_obj.password: 
-        print("You have successfully logged in.")
         login_row1.pack_forget()
         login_row2.pack_forget()
         login_row3.pack_forget()
