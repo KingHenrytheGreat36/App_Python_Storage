@@ -98,7 +98,4 @@ tk.Button(newaccount_row4, text="Go", command=create_account_button).pack(pady=5
 
 
 
-
-
-
 root.mainloop()

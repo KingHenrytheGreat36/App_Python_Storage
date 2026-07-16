@@ -13,9 +13,9 @@ This project is currently in development as of July 16, 2026.
 
 ## How to Run
 1. Install Python 3  
-1.2. Install Tkinter, if needed
-2. Clone the repository  
-3. Run the main script: App.py
+2. Install Tkinter, if needed
+3. Clone the repository  
+4. Run the main script: App.py
 
 ## Future Plans 
 - Encrypted Storage

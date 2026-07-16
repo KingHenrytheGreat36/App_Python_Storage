@@ -31,13 +31,9 @@ class User:
 
     def add_note(self, title, content):
         self.note_count += 1
-        nid = f"Note{self.note_count}"
-        self.notes[nid] = {"name": title, "content": content}
-        return nid
-    def list_note_names(self):
-        return [note["name"] for note in self.notes.values()]
-    def isNote(self, notename):
-         return any(data["name"] == notename for data in self.notes.values())
+        noteid = f"Note{self.note_count}"
+        self.notes[noteid] = {"name": title, "content": content}
+        return noteid
     def PassEncrypt(self, text): 
         iterations = 50000
         dk = hashlib.pbkdf2_hmac(
