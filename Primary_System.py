@@ -1,7 +1,6 @@
 from User import *
 import tkinter as tk
 from tkinter import messagebox
-from Old_Note_Functions import *
 
 def MainSystem(user_obj):
     mainsys = tk.Tk()
@@ -36,10 +35,7 @@ def MainSystem(user_obj):
         restart = True
         mainsys.destroy()
     def MyNotesButton():
-        nonlocal user_obj
         print("My Notes Button Pressed")
-        ListNote(user_obj.username)
-        EditNote(user_obj.username)
     def CreateNotesScreen():
         ButtonList.pack_forget()
         HeadLabel.config(text=f"Create a semi-secure Note tied to your account.\nThe name can be anything you want. It is used to read the note later.\n")
@@ -58,13 +54,15 @@ def MainSystem(user_obj):
             user_obj = load_user(username) 
             notecount = user_obj.add_note(CreateNoteName.get(), content)
             save_user(user_obj)
-            messagebox.showinfo(f"Note Created", f"Note {CreateNoteName.get()} has been saved for account {username}.")
+            messagebox.showinfo(f"Note Created", f"Note, {CreateNoteName.get()}, has been saved for {username}.")
             messagebox.showinfo("Debug", f"(For debuging purposes, it is acualy note {notecount})")
+        CreateNoteScreen.pack_forget()
+        ReturnButtonScreen()
 
     #endregion
 
     # Button Screen
-    tk.Button(ButtonList, text="My Notes ( No Click! )", command=MyNotesButton).pack(pady=15)
+    tk.Button(ButtonList, text="My Notes ( No Click )", command=MyNotesButton).pack(pady=15)
     tk.Button(ButtonList, text="Create Notes", command=CreateNotesScreen).pack(pady=15)
     tk.Button(ButtonList, text="About ( No Click )", command=AboutButton).pack(pady=15)
     tk.Button(ButtonList, text=f"{user_obj.username.capitalize()}'s Settings (No Click)", command=SettingsButton).pack(pady=15)
