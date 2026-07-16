@@ -1,47 +1,54 @@
 import tkinter as tk
 from tkinter import messagebox
-from Primary_Functions import *
+from Primary_System import *
 from User import *
 
 print("Welcome to Python Secure(ish) Storage!")
 print("By Henry F.")
+print("This is an app.")
 root = tk.Tk()
 root.title("Python Storage")
-root.geometry("600x400")
+root.geometry("400x300")
 tk.Label(root, text="Welcome to Python Secure(ish) Storage by Henry F.").pack()
 
 #region --- Frames (Screens) ---
-login_row1 = tk.Frame(root)
-login_row2 = tk.Frame(root)
-login_row3 = tk.Frame(root)
-
-newaccount_row1 = tk.Frame(root)
-newaccount_row2 = tk.Frame(root)
-newaccount_row3 = tk.Frame(root)
-newaccount_row4 = tk.Frame(root)
-
-menu_frame = tk.Frame(root)
-about_frame = tk.Frame(root)
+login_frame = tk.Frame(root)
+login_row1 = tk.Frame(login_frame)
+login_row2 = tk.Frame(login_frame)
+login_row3 = tk.Frame(login_frame)
 login_row1.pack()
 login_row2.pack()
 login_row3.pack()
 
-#for frame in (login_frame, menu_frame):
-#    frame.place(relwidth=1, relheight=1)
-#def show_frame(frame):
- #   frame.tkraise()
+newaccount_frame = tk.Frame(root)
+newaccount_row1 = tk.Frame(newaccount_frame)
+newaccount_row2 = tk.Frame(newaccount_frame)
+newaccount_row3 = tk.Frame(newaccount_frame)
+newaccount_row4 = tk.Frame(newaccount_frame)
+newaccount_row1.pack()
+newaccount_row2.pack()
+newaccount_row3.pack()
+newaccount_row4.pack()
+
+login_frame.pack()
 
 #endregion
+
 def create_account_frame_start():
-    login_row1.pack_forget()
-    login_row2.pack_forget()
-    login_row3.pack_forget()
-    newaccount_row1.pack()
-    newaccount_row2.pack()
-    newaccount_row3.pack()
-    newaccount_row4.pack()
-def SysEnter(username):
-    pass
+    login_frame.pack_forget()
+    newaccount_frame.pack()
+def SysEnter(user_obj):
+    print("You are now in the system")
+    root.destroy()
+    action = MainSystem(user_obj)
+    if action == "Logout":
+        print("Loging out.")
+        login_row1.pack()
+        login_row2.pack()
+        login_row3.pack()
+    else: 
+        print("The End?")
+
 def create_account_button():
     username = newacountusername.get()   # Make this lower
     password1 = newacountpassword1.get()
@@ -49,23 +56,31 @@ def create_account_button():
     print(f"You typed: {username}, {password1}, {password2}")
     if password1.lower() == password2.lower():
         user_obj = User(username.lower(), password1.lower())
+        save_user(user_obj)
+
         messagebox.showinfo("Success", f"Account ({username}) Created")
         print("Account created")
-        SysEnter(username.lower())
-    else: messagebox.showerror("Error", "Incorrect password.")
+        newaccount_row1.pack_forget()
+        newaccount_row2.pack_forget()
+        newaccount_row3.pack_forget()
+        newaccount_row4.pack_forget()
+        SysEnter(user_obj)
+    else: messagebox.showerror("Incorrect Password", "Try again")
     
-    save_user(user_obj)
 def login_button():
     print(f"Login Button pressed,{loginusernamebox.get().lower()}, {loginpasswordbox.get().lower()}")
     username = loginusernamebox.get()
+    password = loginpasswordbox.get()
     try:
-        user_obj = load_user(loginusernamebox.get().lower())
+        user_obj = load_user(username.lower())
     except:
         messagebox.showerror("Error", "No such User")
-    password = username.lower()
-    if user_obj.PassEncrypt(password) == user_obj.password: 
+    if user_obj.PassEncrypt(password.lower()) == user_obj.password: 
         print("You have successfully logged in.")
-        SysEnter(username.lower())
+        login_row1.pack_forget()
+        login_row2.pack_forget()
+        login_row3.pack_forget()
+        SysEnter(user_obj)
     else: 
         messagebox.showerror("Incorrect Password", "Try again.")
 #region  Login_Frame
@@ -90,13 +105,6 @@ newacountpassword2 = tk.Entry(newaccount_row3)
 newacountpassword2.pack()
 tk.Button(newaccount_row4, text="Go", command=create_account_button).pack(pady=5)
 #endregion
-
-
-
-
-
-
-
 
 
 
