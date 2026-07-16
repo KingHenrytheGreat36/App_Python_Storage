@@ -8,7 +8,7 @@ print("By Henry F.")
 print("This is an app.")
 root = tk.Tk()
 root.title("Python Storage")
-root.geometry("400x300")
+root.geometry("3200x320")
 tk.Label(root, text="Welcome to Python Secure(ish) Storage by Henry F.").pack()
 
 #region --- Frames (Screens) ---
@@ -16,19 +16,16 @@ login_frame = tk.Frame(root)
 login_row1 = tk.Frame(login_frame)
 login_row2 = tk.Frame(login_frame)
 login_row3 = tk.Frame(login_frame)
-login_row1.pack()
-login_row2.pack()
-login_row3.pack()
+for row in (login_row1, login_row2, login_row3):
+    row.pack()
 
 newaccount_frame = tk.Frame(root)
 newaccount_row1 = tk.Frame(newaccount_frame)
 newaccount_row2 = tk.Frame(newaccount_frame)
 newaccount_row3 = tk.Frame(newaccount_frame)
 newaccount_row4 = tk.Frame(newaccount_frame)
-newaccount_row1.pack()
-newaccount_row2.pack()
-newaccount_row3.pack()
-newaccount_row4.pack()
+for row in (newaccount_row1, newaccount_row2, newaccount_row3, newaccount_row4):
+    row.pack()
 
 login_frame.pack()
 
