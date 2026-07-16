@@ -39,15 +39,16 @@ def create_account_frame_start():
     newaccount_frame.pack()
 def SysEnter(user_obj):
     print("You are now in the system")
-    root.destroy()
-    action = MainSystem(user_obj)
-    if action == "Logout":
-        print("Loging out.")
+    root.withdraw()   # hide window
+    restart = MainSystem(user_obj)
+    if restart == True:
+        root.deiconify()  # show window again
         login_row1.pack()
         login_row2.pack()
         login_row3.pack()
     else: 
         print("The End?")
+        root.destroy()
 
 def create_account_button():
     username = newacountusername.get()   # Make this lower
@@ -68,7 +69,6 @@ def create_account_button():
     else: messagebox.showerror("Incorrect Password", "Try again")
     
 def login_button():
-    print(f"Login Button pressed,{loginusernamebox.get().lower()}, {loginpasswordbox.get().lower()}")
     username = loginusernamebox.get()
     password = loginpasswordbox.get()
     try:
