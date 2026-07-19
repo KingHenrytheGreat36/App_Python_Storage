@@ -116,5 +116,7 @@ def MainSystem(user_obj):
     CreateNoteText.pack()
     tk.Button(CreateNoteR4, text="Create", command=CreateNoteButton).pack(pady=5)
 
+
+
     mainsys.wait_window()   # outer waits here until win closes
     return restart
