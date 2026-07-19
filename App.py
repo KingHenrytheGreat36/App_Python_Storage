@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import messagebox
-from Primary_System import *
+from Primary_System import MainSystem
 from User import *
+from AdminControl import HasAdminAccess
 
 root = tk.Tk()
 root.title("Python Storage")
@@ -63,7 +64,7 @@ def login_button():
     if username == "admin":
         print("You are an admin")
         root.withdraw()   # hide window
-        AdminAccess()
+        HasAdminAccess()
     try:
         user_obj = load_user(username.lower())
     except:

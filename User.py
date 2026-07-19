@@ -12,11 +12,12 @@ def save_user(user_obj):
         with shelve.open("Storage") as db:
             db[user_obj.username] = user_obj
 
-def Hash(text): 
+def Hash(text, salt): 
     iterations = 50000
     dk = hashlib.pbkdf2_hmac(
             "sha256",              # underlying hash
-            text.lower().encode(), # password
+            text.lower().encode(),
+            salt.encode(), # password
             iterations             # stretching
         )
     return dk.hex()

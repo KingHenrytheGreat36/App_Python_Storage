@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-
+from User import *
 root = tk.Tk()
 root.title("Tkinter Test!")
 root.geometry("400x200")
@@ -13,6 +13,7 @@ username_entry.pack()
 def login():
     username = username_entry.get()
     print("You typed:", username)
+    print(Hash("HFadmin", "asdf"))
 
 tk.Button(root, text="Login", command=login).pack(pady=10)
 res1 = messagebox.showinfo("Info", "This is an info box.")
