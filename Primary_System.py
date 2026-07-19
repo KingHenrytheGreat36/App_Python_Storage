@@ -11,6 +11,7 @@ def MainSystem(user_obj):
     HeadLabel.pack()
     restart = False
 
+
     #region --- Frames (Screens) ---
     ButtonList = tk.Frame(mainsys)
     ButtonList.pack()
@@ -22,7 +23,7 @@ def MainSystem(user_obj):
     CreateNoteR4 = tk.Frame(CreateNoteScreen)
     for row in (CreateNoteR1, CreateNoteR2, CreateNoteR3, CreateNoteR4):
             row.pack()
-    
+
     NotesList = tk.Frame(mainsys)
 
     ViewNoteScreen = tk.Frame(mainsys)
@@ -30,9 +31,8 @@ def MainSystem(user_obj):
     ViewNoteR2 = tk.Frame(ViewNoteScreen)
     for row in (ViewNoteR1, ViewNoteR2):
             row.pack()
-
-
 #endregion
+
 # region Functions
     def ReturntoButtonScreen():    # To return to button screen
         HeadLabel.config(text=f"Welcome {user_obj.username.capitalize()}!")
@@ -63,20 +63,27 @@ def MainSystem(user_obj):
             ViewNoteScreen.pack_forget()
             ReturntoButtonScreen()
         tk.Button(ViewNoteR2, text="Save Changes", command=lambda: MyNoteSaveNote(noteid)).pack()
-
-        
     def MyNotesButton():
+        for widget in NotesList.winfo_children(): # Remove Privious
+            widget.destroy()
         ButtonList.pack_forget()
-        HeadLabel.config(text="My Notes - Choose a note to view/edit")
+        HeadLabel.config(text="My Notes - Choose a note to view/edit") # Create Header
+        row = 0
+        col = 0
+        tk.Button( NotesList,text="Create New", command=CreateNotesScreen).grid(row=row, column=col, padx=5, pady=5)
+        col += 1
+        if col == 5:
+            col = 0
+            row += 1
         for noteid, note in user_obj.notes.items():
-            tk.Button( NotesList,
-                text=note["name"],
-                command=lambda n=noteid: OpenNote(n)
-                ).pack(pady=5)
-
+            tk.Button(NotesList,text=note["name"], command=lambda n=noteid: OpenNote(n)).grid(row=row, column=col, padx=5, pady=5)
+            col += 1
+            if col == 5:
+                col = 0
+                row += 1
         NotesList.pack()
     def CreateNotesScreen():
-        ButtonList.pack_forget()
+        NotesList.pack_forget()
         HeadLabel.config(text=f"Create a semi-secure Note tied to your account.\nThe name can be anything you want. It is used to read the note later.\n")
         CreateNoteScreen.pack()
     def AboutButton():
@@ -95,14 +102,14 @@ def MainSystem(user_obj):
             messagebox.showinfo("Debug", f"(For debuging purposes, it is acualy note {notecount})")
         CreateNoteScreen.pack_forget()
         ReturntoButtonScreen()
+#endregion
     def SettingsButton():
         pass
-    #endregion
+    
 #endregion
 
     # Button Screen
     tk.Button(ButtonList, text="My Notes", command=MyNotesButton).pack(pady=15)
-    tk.Button(ButtonList, text="Create Notes", command=CreateNotesScreen).pack(pady=15)
     tk.Button(ButtonList, text="About ( No Click )", command=AboutButton).pack(pady=15)
     tk.Button(ButtonList, text=f"{user_obj.username.capitalize()}'s Settings (No Click)", command=SettingsButton).pack(pady=15)
     tk.Button(ButtonList, text="Log out", command=Logout).pack(pady=15)

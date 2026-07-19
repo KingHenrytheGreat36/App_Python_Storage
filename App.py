@@ -41,7 +41,6 @@ def SysEnter(user_obj):
         login_row3.pack()
     else: 
         exit()
-
 def create_account_button():
     username = newacountusername.get()   # Make this lower
     password1 = newacountpassword1.get()
@@ -61,6 +60,10 @@ def create_account_button():
 def login_button():
     username = loginusernamebox.get()
     password = loginpasswordbox.get()
+    if username == "admin":
+        print("You are an admin")
+        root.withdraw()   # hide window
+        AdminAccess()
     try:
         user_obj = load_user(username.lower())
     except:
