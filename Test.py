@@ -14,6 +14,8 @@ def login():
     username = username_entry.get()
     print("You typed:", username)
     print(Hash("HFadmin", "asdf"))
+res7 = messagebox.askyesnocancel("Three-way", "Click Yes, No, or Cancel.")
+print(res7)
 
 tk.Button(root, text="Login", command=login).pack(pady=10)
 res1 = messagebox.showinfo("Info", "This is an info box.")

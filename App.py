@@ -7,7 +7,8 @@ from AdminControl import HasAdminAccess
 root = tk.Tk()
 root.title("Python Storage")
 root.geometry("450x400")
-tk.Label(root, text="Welcome to Python Secure(ish) Storage by Henry F.").pack()
+HeadLabel = tk.Label(root, text="Welcome to Python Secure(ish) Storage by Henry F.")
+HeadLabel.pack()
 
 #region --- Frames (Screens) ---
 login_frame = tk.Frame(root)
@@ -37,6 +38,7 @@ def SysEnter(user_obj):
     restart = MainSystem(user_obj)
     if restart == True:
         root.deiconify()  # show window again
+        HeadLabel.pack()
         login_row1.pack()
         login_row2.pack()
         login_row3.pack()

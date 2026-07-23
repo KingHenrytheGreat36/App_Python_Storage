@@ -2,6 +2,7 @@ from User import *
 import tkinter as tk
 from tkinter import messagebox
 from Primary_System import MainSystem
+import os
 
 def HasAdminAccess():
     AdminAuthWin = tk.Tk()
@@ -33,15 +34,23 @@ def AdminControls():
 
     ButtonScreen.pack()
 
-    def OpenDelStorage():
-        Executive("1")
+    def DelStorage():
+        yn = messagebox.askyesnocancel("Storage Deletion", "Would you like to delete all data?")
+        if yn == "yes":
+            for ext in (".db", ".dat", ".dir"):
+                try:
+                    os.remove("Storage" + ext)
+                except FileNotFoundError: # Will happen every time, so just ignore
+                    pass
+            messagebox.showinfo("Storage Deleted", "The aplication will exit")
+            exit()
     def OpenExecCode():
         Executive("2")
     def OpenImpersonate():
         Executive("3")
 
 
-    tk.Button(ButtonScreen, text="Clear Storage", command=OpenDelStorage).pack(pady=5)
+    tk.Button(ButtonScreen, text="Clear Storage", command=DelStorage).pack(pady=5)
     tk.Button(ButtonScreen, text="Execute Code", command=OpenExecCode).pack(pady=5)
     tk.Button(ButtonScreen, text="Impersonate", command=OpenImpersonate).pack(pady=5)
 
