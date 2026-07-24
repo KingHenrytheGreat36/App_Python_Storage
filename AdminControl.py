@@ -51,7 +51,13 @@ def AdminControls():
             messagebox.showinfo("Aborted", "Storage not deleted")
         exit()
     def ImpersonateThis(username):
-        print(username.capitalize())
+        user_obj = load_user(username)
+        print(username.capitalize() + " should be " + user_obj.username.capitalize())
+        restart = MainSystem(user_obj)
+        if restart == True:
+            pass
+        else: 
+            exit()
     def OpenImpersonate():
         for widget in UserList.winfo_children(): # Remove Privious
             widget.destroy()
@@ -62,22 +68,25 @@ def AdminControls():
         col += 1
         with shelve.open("Storage") as db:
             for user in db.keys():       
-                print(user)         
                 tk.Button(UserList,text=user.capitalize(), command=lambda username=user: ImpersonateThis(username)).grid(row=row, column=col, padx=5, pady=5)
                 col += 1
                 if col == 5:
                     col = 0
                     row += 1
         UserList.pack()
+    def Impersonate2Home():
+        UserList.pack_forget()
+        ImpersonateR1.pack_forget()
+        ButtonScreen.pack()
+
 
 
     tk.Button(ButtonScreen, text="Clear Storage", command=DelStorage).pack(pady=5)
     tk.Button(ButtonScreen, text="Impersonate", command=OpenImpersonate).pack(pady=5)
 
 
-    tk.Label(ImpersonateR1, text="Select a user to become").pack()
-
-
+    tk.Label(ImpersonateR1, text="Select a user to become").pack(side="left")
+    tk.Button(ImpersonateR1, text="Go back", command=Impersonate2Home).pack()
 
 
 
