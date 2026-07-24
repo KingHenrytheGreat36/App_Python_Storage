@@ -42,6 +42,7 @@ def SysEnter(user_obj):
         login_row1.pack()
         login_row2.pack()
         login_row3.pack()
+        login_frame.pack() # NOTE does this fix it?
     else: 
         exit()
 def create_account_button():
