@@ -64,7 +64,6 @@ def login_button():
     username = loginusernamebox.get()
     password = loginpasswordbox.get()
     if username == "admin":
-        print("You are an admin")
         root.withdraw()   # hide window
         HasAdminAccess()
     try:

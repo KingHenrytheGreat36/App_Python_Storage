@@ -30,38 +30,52 @@ def AdminControls():
     AdminWin.geometry("800x600")
     tk.Label(AdminWin, text="Admin Control").pack()
 
+    ImpersonateR1 = tk.Frame(AdminWin)
     ButtonScreen = tk.Frame(AdminWin)
+
+    UserList = tk.Frame(AdminWin)
+
 
     ButtonScreen.pack()
 
     def DelStorage():
         yn = messagebox.askyesnocancel("Storage Deletion", "Would you like to delete all data?")
-        if yn == "yes":
+        if yn == True:
             for ext in (".db", ".dat", ".dir"):
                 try:
                     os.remove("Storage" + ext)
                 except FileNotFoundError: # Will happen every time, so just ignore
                     pass
             messagebox.showinfo("Storage Deleted", "The aplication will exit")
-            exit()
-    def OpenExecCode():
-        Executive("2")
+        else:
+            messagebox.showinfo("Aborted", "Storage not deleted")
+        exit()
+    def ImpersonateThis(username):
+        print(username.capitalize())
     def OpenImpersonate():
-        Executive("3")
+        for widget in UserList.winfo_children(): # Remove Privious
+            widget.destroy()
+        ButtonScreen.pack_forget()
+        ImpersonateR1.pack()
+        row = 0
+        col = 0
+        col += 1
+        with shelve.open("Storage") as db:
+            for user in db.keys():       
+                print(user)         
+                tk.Button(UserList,text=user.capitalize(), command=lambda username=user: ImpersonateThis(username)).grid(row=row, column=col, padx=5, pady=5)
+                col += 1
+                if col == 5:
+                    col = 0
+                    row += 1
+        UserList.pack()
 
 
     tk.Button(ButtonScreen, text="Clear Storage", command=DelStorage).pack(pady=5)
-    tk.Button(ButtonScreen, text="Execute Code", command=OpenExecCode).pack(pady=5)
     tk.Button(ButtonScreen, text="Impersonate", command=OpenImpersonate).pack(pady=5)
 
 
-
-
-
-
-
-
-
+    tk.Label(ImpersonateR1, text="Select a user to become").pack()
 
 
 
@@ -71,45 +85,3 @@ def AdminControls():
 
 
     AdminWin.wait_window()
-    print("Admin left.")
-
-
-
-
-
-# Old Console Version of program did this, so I will keep it for now
-def Executive(what):
-    import os
-    print("Hello, Henry, The Wise Creator who knows the secret code!\nExecutive Functions Active.")
-    #print("1. Delete All Storage.\n2. Execute Python Code.\n3. Log in as someone else.")
-    if what == "1": # Clear Storage
-        for ext in (".db", ".dat", ".dir"):
-            try:
-                os.remove("Storage" + ext)
-            except FileNotFoundError:
-                pass
-        print("All Storage Deleted.")
-        exit()
-    elif what == "2": # Execute Code
-        command = input("Be careful about executing code. It can destroy your system, or corupt all storage.\nDo control C or write c to cancel. \nBe careful! \nEnter Python code: ")
-        if command.lower() == "c":
-            print("Code not Executed. Cancelled. Bye, Henry!")
-            exit()
-        try:
-            exec(command)
-            print("Code Executed. Bye, Henry!")
-            exit()
-        except Exception as e:
-            print("Code not Executed. Error:", e)
-            exit()
-    elif what == "3":   # Impersonate  
-        with shelve.open("Storage") as db:
-            print("Choose a user to inpersonate:")
-            for user in db.keys():
-                print(user + ",")
-            n = input("What username:")
-            try:
-                MainSystem(n.lower())
-            except:
-                print("No user.")
-            exit()
