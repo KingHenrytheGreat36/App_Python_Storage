@@ -1,6 +1,7 @@
 from User import *
 import tkinter as tk
 from tkinter import messagebox
+from Settings import SettingsWin
 
 def MainSystem(user_obj):
     mainsys = tk.Tk()
@@ -104,14 +105,16 @@ def MainSystem(user_obj):
         ReturntoButtonScreen()
 #endregion
     def SettingsButton():
-        pass
+        mainsys.withdraw()     # hide window 
+        SettingsWin(user_obj) # NOTE THIS PART DOESNT WORK
+        mainsys.deiconify()    # show window again
     
 #endregion
 
     # Button Screen
     tk.Button(ButtonList, text="My Notes", command=MyNotesButton).pack(pady=15)
     tk.Button(ButtonList, text="About ( No Click )", command=AboutButton).pack(pady=15)
-    tk.Button(ButtonList, text=f"{user_obj.username.capitalize()}'s Settings (No Click)", command=SettingsButton).pack(pady=15)
+    tk.Button(ButtonList, text=f"{user_obj.username.capitalize()}'s Settings", command=SettingsButton).pack(pady=15)
     tk.Button(ButtonList, text="Log out", command=Logout).pack(pady=15)
 
     # Create Note Screen
