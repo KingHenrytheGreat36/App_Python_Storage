@@ -7,8 +7,8 @@ This project is currently in development as of July 16, 2026.
 ## Features
 - User login system
 - Account creation
-- Settings menu   (COMMING SOON)  
-- Shelve-based class storage backen
+- Settings menu   (UNDER CONSTRUCTION)  
+- Shelve-based class storage backend
 - Hashed passwords
 
 ## How to Run
@@ -19,7 +19,7 @@ This project is currently in development as of July 16, 2026.
 
 ## Future Plans 
 - Encrypted Storage
-- Setting Page
+- Better UI (Modern)
 
 ## Why I Built This
 I (@KingHenrytheGreat36) built this project to re-learn Python, learn Tkinter, storage systems, and secure password handling. 
