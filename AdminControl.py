@@ -46,10 +46,11 @@ def AdminControls():
                     os.remove("Storage" + ext)
                 except FileNotFoundError: # Will happen every time, so just ignore
                     pass
-            messagebox.showinfo("Storage Deleted", "The aplication will exit")
+            messagebox.showinfo("Storage Deleted", "Storage Deleted - the aplication will exit")
+            os._exit(0)
         else:
-            messagebox.showinfo("Aborted", "Storage not deleted")
-        exit()
+            messagebox.showinfo("Aborted", "Aborted - Storage not deleted")
+            os._exit(0)
     def ImpersonateThis(username):
         user_obj = load_user(username)
         print(username.capitalize() + " should be " + user_obj.username.capitalize())

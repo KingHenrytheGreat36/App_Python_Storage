@@ -69,15 +69,16 @@ def login_button():
         HasAdminAccess()
     try:
         user_obj = load_user(username.lower())
+        if user_obj.PassEncrypt(password.lower()) == user_obj.password: 
+            login_row1.pack_forget()
+            login_row2.pack_forget()
+            login_row3.pack_forget()
+            SysEnter(user_obj)
+        else: 
+            messagebox.showerror("Incorrect Password", "Try again.")
     except:
         messagebox.showerror("Error", "No such User")
-    if user_obj.PassEncrypt(password.lower()) == user_obj.password: 
-        login_row1.pack_forget()
-        login_row2.pack_forget()
-        login_row3.pack_forget()
-        SysEnter(user_obj)
-    else: 
-        messagebox.showerror("Incorrect Password", "Try again.")
+        
 #region  Login_Frame
 tk.Label(login_row1, text="Username ").pack(side="left")
 loginusernamebox = tk.Entry(login_row1)
@@ -100,7 +101,6 @@ newacountpassword2 = tk.Entry(newaccount_row3)
 newacountpassword2.pack()
 tk.Button(newaccount_row4, text="Go", command=create_account_button).pack(pady=5)
 #endregion
-
 
 
 
