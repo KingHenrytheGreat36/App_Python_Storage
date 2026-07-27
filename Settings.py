@@ -56,3 +56,6 @@ def SettingsWin(user_obj):
     Newpassbox2 = tk.Entry(ChangePassR3)
     Newpassbox2.pack()
     tk.Button(ChangePassR4, text="Change Password", command=DoChangePass).pack(side="left",pady=5)
+
+    SettingsWin.wait_window()   # outer waits here until win closes
+    return 1

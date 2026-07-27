@@ -87,8 +87,6 @@ def MainSystem(user_obj):
         NotesList.pack_forget()
         HeadLabel.config(text=f"Create a semi-secure Note tied to your account.\nThe name can be anything you want. It is used to read the note later.\n")
         CreateNoteScreen.pack()
-    def AboutButton():
-        pass
     def CreateNoteButton():
         nonlocal user_obj
         content = CreateNoteText.get("1.0", "end-1c")
@@ -104,6 +102,8 @@ def MainSystem(user_obj):
         CreateNoteScreen.pack_forget()
         ReturntoButtonScreen()
 #endregion
+    def AboutButton():
+            pass
     def SettingsButton():
         mainsys.withdraw()     # hide window 
         SettingsWin(user_obj) # NOTE THIS PART DOESNT WORK
