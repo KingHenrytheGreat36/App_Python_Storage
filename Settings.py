@@ -31,14 +31,20 @@ def SettingsWin(user_obj):
         SettingsList.pack_forget()
         HeadLabel.configure(text="Change Password")
         ChangePassScreen.pack()
+    def FromChangePassScreen():
+        ChangePassScreen.pack_forget()
+        SettingsList.pack()
+        HeadLabel.configure(text="Choose a Setting")
     def DoChangePass():
         Oldpassword = Oldpassbox.get()
         Newpassword1 = Newpassbox1.get()
         Newpassword2 = Newpassbox2.get()
         if Newpassword1.lower() == Newpassword2.lower():
             if user_obj.PassEncrypt(Oldpassword.lower()) == user_obj.password:
-                # Add Password Saving Here
-                pass
+                user_obj.password = user_obj.PassEncrypt(Newpassword1.lower())
+                save_user(user_obj)
+                messagebox.showinfo("Password Saved", "Your Password has been saved.")
+                FromChangePassScreen()
             else:
                 messagebox.showerror("Password Incorrect", "Old password is not correct")
         else:
@@ -55,7 +61,8 @@ def SettingsWin(user_obj):
     tk.Label(ChangePassR3, text="New Password").pack(side="left")
     Newpassbox2 = tk.Entry(ChangePassR3)
     Newpassbox2.pack()
-    tk.Button(ChangePassR4, text="Change Password", command=DoChangePass).pack(side="left",pady=5)
+    tk.Button(ChangePassR4, text="Change Password", command=DoChangePass).pack(side="left" )
+    tk.Button(ChangePassR4, text="Back", command=FromChangePassScreen).pack(side="right")
 
     SettingsWin.wait_window()   # outer waits here until win closes
     return 1
