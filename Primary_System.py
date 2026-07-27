@@ -32,6 +32,12 @@ def MainSystem(user_obj):
     ViewNoteR2 = tk.Frame(ViewNoteScreen)
     for row in (ViewNoteR1, ViewNoteR2):
             row.pack()
+    
+    AboutScreen = tk.Frame(mainsys)
+    AboutR1 = tk.Frame(AboutScreen)
+    AboutR1.pack()
+    AboutR2 = tk.Frame(AboutScreen)
+    AboutR2.pack()
 #endregion
 
 # region Functions
@@ -102,8 +108,15 @@ def MainSystem(user_obj):
         CreateNoteScreen.pack_forget()
         ReturntoButtonScreen()
 #endregion
-    def AboutButton():
-            pass
+    def ToAboutScreen():
+            ButtonList.pack_forget()
+            HeadLabel.configure(text="About Python Storing")
+            AboutScreen.pack()
+    def FromAboutScreen():
+         AboutScreen.pack_forget()
+         ButtonList.pack()
+         HeadLabel.configure(text=f"Welcome {user_obj.username.capitalize()}!")
+
     def SettingsButton():
         mainsys.withdraw()     # hide window 
         SettingsWin(user_obj) # NOTE THIS PART DOESNT WORK
@@ -113,7 +126,7 @@ def MainSystem(user_obj):
 
     # Button Screen
     tk.Button(ButtonList, text="My Notes", command=MyNotesButton).pack(pady=15)
-    tk.Button(ButtonList, text="About ( No Click )", command=AboutButton).pack(pady=15)
+    tk.Button(ButtonList, text="About", command=ToAboutScreen).pack(pady=15)
     tk.Button(ButtonList, text=f"{user_obj.username.capitalize()}'s Settings", command=SettingsButton).pack(pady=15)
     tk.Button(ButtonList, text="Log out", command=Logout).pack(pady=15)
 
@@ -126,6 +139,10 @@ def MainSystem(user_obj):
     CreateNoteText.pack()
     tk.Button(CreateNoteR4, text="Create", command=CreateNoteButton).pack(pady=5)
 
+    #About Screen
+    AboutStuff = "This is a simple storage system written in Python.\nThis was created by @HenrytheGreat36 on Github.\nThis is a app version of a previous console version by the same name.\nAs you know, you can make an acount to store notes."
+    tk.Label(AboutR1, text=AboutStuff).pack()
+    tk.Button(AboutR2, text="Back", command=FromAboutScreen).pack(pady=10)
 
 
     mainsys.wait_window()   # outer waits here until win closes
