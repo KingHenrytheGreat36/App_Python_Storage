@@ -5,14 +5,14 @@ import secrets
 # This is where all of the user profile stuff goes
 
 def load_user(username):
-        with shelve.open("Storage") as db:
+        with shelve.open("Py_Storage") as db:
             return db[username]
 
 def save_user(user_obj):
-        with shelve.open("Storage") as db:
+        with shelve.open("Py_Storage") as db:
             db[user_obj.username] = user_obj
 
-def Hash(text, salt): 
+def hash(text, salt): 
     iterations = 50000
     dk = hashlib.pbkdf2_hmac(
             "sha256",              # underlying hash
@@ -26,7 +26,7 @@ class User:
     def __init__(self, username, password):
         self.username = username
         self.salt = secrets.token_hex(16)
-        self.password = self.PassEncrypt(password)
+        self.password = self.encrypt_pass(password)
         self.note_count = 0
         self.notes = {}
 
@@ -35,7 +35,7 @@ class User:
         noteid = f"Note{self.note_count}"
         self.notes[noteid] = {"name": title, "content": content}
         return noteid
-    def PassEncrypt(self, text): 
+    def encrypt_pass(self, text): 
         iterations = 50000
         dk = hashlib.pbkdf2_hmac(
             "sha256",              # underlying hash
@@ -44,10 +44,10 @@ class User:
             iterations             # stretching
         )
         return dk.hex()
-    def DeleteAcount(self):
+    def delete_acount(self):
         username = self.username.lower()
 
-        with shelve.open("Storage") as db:
+        with shelve.open("Py_Storage") as db:
             if username in db:
                 del db[username]
                 return True

@@ -4,7 +4,7 @@ from tkinter import messagebox
 import time
 import os
 
-def SettingsWin(user_obj):
+def settings_win(user_obj):
     SettingsWin = tk.Tk()
     SettingsWin.title("Python Storage")
     SettingsWin.geometry("800x600")
@@ -29,15 +29,15 @@ def SettingsWin(user_obj):
     SettingsList.pack()
 
 
-    def ToChangePassScreen():
+    def to_change_pass_screen():
         SettingsList.pack_forget()
         HeadLabel.configure(text="Change Password")
         ChangePassScreen.pack()
-    def FromChangePassScreen():
+    def from_change_pass_screen():
         ChangePassScreen.pack_forget()
         SettingsList.pack()
         HeadLabel.configure(text="Choose a Setting")
-    def DoChangePass():
+    def do_change_pass():
         Oldpassword = Oldpassbox.get()
         Newpassword1 = Newpassbox1.get()
         Newpassword2 = Newpassbox2.get()
@@ -46,16 +46,16 @@ def SettingsWin(user_obj):
                 user_obj.password = user_obj.PassEncrypt(Newpassword1.lower())
                 save_user(user_obj)
                 messagebox.showinfo("Password Saved", "Your Password has been saved.")
-                FromChangePassScreen()
+                from_change_pass_screen()
             else:
                 messagebox.showerror("Password Incorrect", "Old password is not correct")
         else:
             messagebox.showerror("Error", "New Passwords are not the same.") # old passwrods must match
-    def ToNicknameChange():
+    def to_nickname_change():
         messagebox.showerror("Nothing Now", "Nothing Now")
-    def FromNicknameChange():
+    def from_nickname_change():
         pass
-    def DelAcount():
+    def delacount():
         yn = messagebox.askyesnocancel("Acount Deletion", "Would you like to delete your account?")
         if yn:
             time.sleep(1)
@@ -75,11 +75,11 @@ def SettingsWin(user_obj):
             messagebox.showinfo("Aborted", "Aborted - Account not deleted")
 
 
-    tk.Button(SettingsList, text="Change Password", command=ToChangePassScreen).pack()
-    tk.Button(SettingsList, text="Change Nickname? (NOTHING NOW)", command=ToNicknameChange).pack(pady=10)
+    tk.Button(SettingsList, text="Change Password", command=to_change_pass_screen).pack()
+    tk.Button(SettingsList, text="Change Nickname? (NOTHING NOW)", command=to_nickname_change).pack(pady=10)
     tk.Label(SettingsList, text="").pack()
     tk.Label(SettingsList, text="").pack()
-    tk.Button(SettingsList, text="Delete Acount", command=DelAcount).pack()
+    tk.Button(SettingsList, text="Delete Acount", command=delacount).pack()
 
 
 
@@ -92,8 +92,8 @@ def SettingsWin(user_obj):
     tk.Label(ChangePassR3, text="New Password").pack(side="left")
     Newpassbox2 = tk.Entry(ChangePassR3)
     Newpassbox2.pack()
-    tk.Button(ChangePassR4, text="Change Password", command=DoChangePass).pack(side="left" )
-    tk.Button(ChangePassR4, text="Back", command=FromChangePassScreen).pack(side="right")
+    tk.Button(ChangePassR4, text="Change Password", command=do_change_pass).pack(side="left" )
+    tk.Button(ChangePassR4, text="Back", command=from_change_pass_screen).pack(side="right")
 
 
 

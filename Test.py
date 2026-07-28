@@ -13,7 +13,7 @@ username_entry.pack()
 def login():
     username = username_entry.get()
     print("You typed:", username)
-    print(Hash("HFadmin", "asdf"))
+    print(hash("HFadmin", "asdf"))
 res7 = messagebox.askyesnocancel("Three-way", "Click Yes, No, or Cancel.")
 print(res7)
 

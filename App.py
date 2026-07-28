@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 from Primary_System import MainSystem
 from User import *
-from AdminControl import HasAdminAccess
+from Admin_Control import is_admin
 
 root = tk.Tk()
 root.title("Python Storage")
@@ -33,10 +33,10 @@ login_frame.pack()
 def create_account_frame_start():
     login_frame.pack_forget()
     newaccount_frame.pack()
-def SysEnter(user_obj):
+def sysenter(user_obj):
     root.withdraw()   # hide window
     restart = MainSystem(user_obj)
-    if restart == True:
+    if restart:
         root.deiconify()  # show window again
         HeadLabel.pack()
         login_row1.pack()
@@ -58,7 +58,7 @@ def create_account_button():
         newaccount_row2.pack_forget()
         newaccount_row3.pack_forget()
         newaccount_row4.pack_forget()
-        SysEnter(user_obj)
+        sysenter(user_obj)
     else: messagebox.showerror("Incorrect Password", "Try again")
     
 def login_button():
@@ -66,14 +66,14 @@ def login_button():
     password = loginpasswordbox.get()
     if username == "admin":
         root.withdraw()   # hide window
-        HasAdminAccess()
+        is_admin()
     try:
         user_obj = load_user(username.lower())
         if user_obj.PassEncrypt(password.lower()) == user_obj.password: 
             login_row1.pack_forget()
             login_row2.pack_forget()
             login_row3.pack_forget()
-            SysEnter(user_obj)
+            sysenter(user_obj)
         else: 
             messagebox.showerror("Incorrect Password", "Try again.")
     except:
