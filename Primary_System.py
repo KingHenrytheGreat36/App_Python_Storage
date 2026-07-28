@@ -119,7 +119,7 @@ def MainSystem(user_obj):
 
     def SettingsButton():
         mainsys.withdraw()     # hide window 
-        SettingsWin(user_obj) # NOTE THIS PART DOESNT WORK
+        SettingsWin(user_obj)
         mainsys.deiconify()    # show window again
     
 #endregion

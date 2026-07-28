@@ -44,3 +44,12 @@ class User:
             iterations             # stretching
         )
         return dk.hex()
+    def DeleteAcount(self):
+        username = self.username.lower()
+
+        with shelve.open("Storage") as db:
+            if username in db:
+                del db[username]
+                return True
+            else:
+                return False

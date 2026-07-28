@@ -1,6 +1,8 @@
 from User import *
 import tkinter as tk
 from tkinter import messagebox
+import time
+import os
 
 def SettingsWin(user_obj):
     SettingsWin = tk.Tk()
@@ -49,8 +51,37 @@ def SettingsWin(user_obj):
                 messagebox.showerror("Password Incorrect", "Old password is not correct")
         else:
             messagebox.showerror("Error", "New Passwords are not the same.") # old passwrods must match
+    def ToNicknameChange():
+        messagebox.showerror("Nothing Now", "Nothing Now")
+    def FromNicknameChange():
+        pass
+    def DelAcount():
+        yn = messagebox.askyesnocancel("Acount Deletion", "Would you like to delete your account?")
+        if yn:
+            time.sleep(1)
+            yn2 =  messagebox.askyesnocancel("Acount Deletion", "Are you sure?")
+            if yn2:
+                didwork = user_obj.DeleteAcount()
+                if didwork:
+                    messagebox.showinfo("Successful", "Account deleted")
+                    time.sleep(3)
+                    messagebox.showwarning("Closing", "Application will close")
+                    os._exit(0)
+                else:
+                    messagebox.showinfo("Error", "An error occured. Account not deleted")
+            else:
+                messagebox.showinfo("Aborted", "Aborted - Account not deleted")
+        else:
+            messagebox.showinfo("Aborted", "Aborted - Account not deleted")
+
 
     tk.Button(SettingsList, text="Change Password", command=ToChangePassScreen).pack()
+    tk.Button(SettingsList, text="Change Nickname? (NOTHING NOW)", command=ToNicknameChange).pack(pady=10)
+    tk.Label(SettingsList, text="").pack()
+    tk.Label(SettingsList, text="").pack()
+    tk.Button(SettingsList, text="Delete Acount", command=DelAcount).pack()
+
+
 
     tk.Label(ChangePassR1, text="Old Password ").pack(side="left")
     Oldpassbox = tk.Entry(ChangePassR1)
@@ -63,6 +94,8 @@ def SettingsWin(user_obj):
     Newpassbox2.pack()
     tk.Button(ChangePassR4, text="Change Password", command=DoChangePass).pack(side="left" )
     tk.Button(ChangePassR4, text="Back", command=FromChangePassScreen).pack(side="right")
+
+
 
     SettingsWin.wait_window()   # outer waits here until win closes
     return 1

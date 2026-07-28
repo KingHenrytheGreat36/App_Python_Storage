@@ -90,7 +90,7 @@ tk.Button(login_row3, text="Log In", command=login_button).pack(side="left",pady
 tk.Button(login_row3, text="or Create Acount", command=create_account_frame_start).pack(pady=5)
 #endregion
 #region New acount frame
-tk.Label(newaccount_row1, text="Enter your new username  ").pack(side="left")
+tk.Label(newaccount_row1, text="Enter username  ").pack(side="left")
 newacountusername = tk.Entry(newaccount_row1)
 newacountusername.pack()
 tk.Label(newaccount_row2, text="Enter same password  ").pack(side="left")
