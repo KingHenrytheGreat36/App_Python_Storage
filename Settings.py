@@ -60,14 +60,19 @@ def settings_win(user_obj):
             messagebox.showerror("Error", "New Passwords are not the same.") # old passwrods must match
     def to_nickname_change():
         SettingsList.pack_forget()
-        HeadLabel.configure(text="Change Nickname")
-
+        HeadLabel.configure(text="Change Nickname")   # NOTE ADD previous nickname to entry
         NicknameChangeScreen.pack()
-        messagebox.showerror("Nothing Now", "Nothing Now")
     def from_nickname_change():
         NicknameChangeScreen.pack_forget()
         SettingsList.pack()
         HeadLabel.configure(text="Choose a Setting")
+    def save_nickname():
+        newnickname = NicknameBox.get()
+        oldnickname = user_obj.nickname
+        print(oldnickname + "     " + newnickname)
+        user_obj.nickname = newnickname.capitalize()
+        save_user(user_obj)
+        messagebox.showinfo("Nickname change", f"Your nickname has been changed from {oldnickname} to {newnickname}.")
 
     def delacount():
         yn = messagebox.askyesnocancel("Acount Deletion", "Would you like to delete your account?")
@@ -90,7 +95,7 @@ def settings_win(user_obj):
 
 
     tk.Button(SettingsList, text="Change Password", command=to_change_pass_screen).pack()
-    tk.Button(SettingsList, text="Change Nickname? (NOTHING NOW)", command=to_nickname_change).pack(pady=10)
+    tk.Button(SettingsList, text="Change Nickname", command=to_nickname_change).pack(pady=10)
     tk.Label(SettingsList, text="").pack()
     tk.Label(SettingsList, text="").pack()
     tk.Button(SettingsList, text="Delete Acount", command=delacount).pack()
@@ -108,6 +113,14 @@ def settings_win(user_obj):
     Newpassbox2.pack()
     tk.Button(ChangePassR4, text="Change Password", command=do_change_pass).pack(side="left" )
     tk.Button(ChangePassR4, text="Back", command=from_change_pass_screen).pack(side="right")
+
+
+    tk.Label(NicknameR1, text="Nickname").pack(side="left")
+    NicknameBox = tk.Entry(NicknameR1)
+    NicknameBox.pack()
+    tk.Button(NicknameR2, text="Back", command=from_nickname_change).pack(side="left")
+    tk.Button(NicknameR2, text="Save", command=save_nickname).pack(side="right" )
+    
 
 
 

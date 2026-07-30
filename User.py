@@ -35,6 +35,7 @@ def hash(text, salt):
 class User:
     def __init__(self, username, password):
         self.username = username
+        self.nickname = username
         self.salt = secrets.token_hex(16)
         self.password = self.encrypt_pass(password)
         self.note_count = 0

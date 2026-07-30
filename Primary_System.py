@@ -8,7 +8,7 @@ def MainSystem(user_obj):
     mainsys.title("Python Storage")
     mainsys.geometry("800x600")
     tk.Label(mainsys, text="Python Secure(ish) Storage").pack()
-    HeadLabel = tk.Label(mainsys, text=f"Welcome {user_obj.username.capitalize()}!")
+    HeadLabel = tk.Label(mainsys, text=f"Welcome {user_obj.nickname}!")
     HeadLabel.pack()
     restart = False
 
@@ -42,7 +42,7 @@ def MainSystem(user_obj):
 
 # region Functions
     def return_to_button_screen():    # To return to button screen
-        HeadLabel.config(text=f"Welcome {user_obj.username.capitalize()}!")
+        HeadLabel.config(text=f"Welcome {user_obj.nickname}!")
         ButtonList.pack()
     def logout():
         nonlocal restart
@@ -97,13 +97,14 @@ def MainSystem(user_obj):
         nonlocal user_obj
         content = CreateNoteText.get("1.0", "end-1c")
         username = user_obj.username.lower()
+        nickname = user_obj.nickname
         if CreateNoteName.get() == "":
             messagebox.showerror("Missing Content", "Write a note name")
         else:
             user_obj = load_user(username) 
             notecount = user_obj.add_note(CreateNoteName.get(), content)
             save_user(user_obj)
-            messagebox.showinfo(f"Note Created", f"Note, {CreateNoteName.get()}, has been saved for {username}.")
+            messagebox.showinfo(f"Note Created", f"Note, {CreateNoteName.get()}, has been saved for {nickname}.")
             messagebox.showinfo("Debug", f"(For debuging purposes, it is acualy note {notecount})")
         CreateNoteScreen.pack_forget()
         return_to_button_screen()
@@ -115,7 +116,7 @@ def MainSystem(user_obj):
     def fromaboutscreen():
          AboutScreen.pack_forget()
          ButtonList.pack()
-         HeadLabel.configure(text=f"Welcome {user_obj.username.capitalize()}!")
+         HeadLabel.configure(text=f"Welcome {user_obj.nickname}!")
 
     def settingsbutton():
         mainsys.withdraw()     # hide window 
