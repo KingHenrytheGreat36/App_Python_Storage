@@ -11,6 +11,16 @@ def load_user(username):
 def save_user(user_obj):
         with shelve.open("Py_Storage") as db:
             db[user_obj.username] = user_obj
+def is_OK_username(username):
+    if not username.strip():
+        return False
+    if username.lower().strip() == "admin":
+        return False
+    try:
+        load_user(username)
+        return False
+    except KeyError:
+        return True
 
 def hash(text, salt): 
     iterations = 50000

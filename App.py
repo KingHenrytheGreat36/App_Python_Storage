@@ -49,6 +49,9 @@ def create_account_button():
     username = newacountusername.get()   # Make this lower
     password1 = newacountpassword1.get()
     password2 = newacountpassword2.get()
+    if not is_OK_username(username):
+        messagebox.showerror("Invalad Username", 'This username is invalid, try again.')
+        return 
     if password1.lower() == password2.lower():
         user_obj = User(username.lower(), password1.lower())
         save_user(user_obj)

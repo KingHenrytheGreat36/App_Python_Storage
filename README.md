@@ -18,7 +18,8 @@ This project is currently in development as of July 16, 2026.
 4. Run the main script: App.py
 
 ## Future Plans 
-- Encrypted Storage
+- Encrypted Storage (notes)
+- Shared Notes
 - Better UI (Modern)
 
 ## Why I Built This

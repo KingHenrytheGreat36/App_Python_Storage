@@ -25,6 +25,13 @@ def settings_win(user_obj):
     ChangePassR3.pack()
     ChangePassR4 = tk.Frame(ChangePassScreen)
     ChangePassR4.pack()
+
+    NicknameChangeScreen = tk.Frame(SettingsWin)
+
+    NicknameR1 = tk.Frame(NicknameChangeScreen)
+    NicknameR1.pack()
+    NicknameR2 = tk.Frame(NicknameChangeScreen)
+    NicknameR2.pack()
     
     SettingsList.pack()
 
@@ -52,9 +59,16 @@ def settings_win(user_obj):
         else:
             messagebox.showerror("Error", "New Passwords are not the same.") # old passwrods must match
     def to_nickname_change():
+        SettingsList.pack_forget()
+        HeadLabel.configure(text="Change Nickname")
+
+        NicknameChangeScreen.pack()
         messagebox.showerror("Nothing Now", "Nothing Now")
     def from_nickname_change():
-        pass
+        NicknameChangeScreen.pack_forget()
+        SettingsList.pack()
+        HeadLabel.configure(text="Choose a Setting")
+
     def delacount():
         yn = messagebox.askyesnocancel("Acount Deletion", "Would you like to delete your account?")
         if yn:
@@ -94,6 +108,8 @@ def settings_win(user_obj):
     Newpassbox2.pack()
     tk.Button(ChangePassR4, text="Change Password", command=do_change_pass).pack(side="left" )
     tk.Button(ChangePassR4, text="Back", command=from_change_pass_screen).pack(side="right")
+
+
 
 
 
