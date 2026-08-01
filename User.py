@@ -11,16 +11,17 @@ def load_user(username):
 def save_user(user_obj):
         with shelve.open("Py_Storage") as db:
             db[user_obj.username] = user_obj
-def is_OK_username(username):
-    if not username.strip():
+def is_OK_username(username):       # Fix this in issue #5 !
+    if username.strip() == "":
         return False
-    if username.lower().strip() == "admin":
+    if username.strip() == "admin":
         return False
-    try:
-        load_user(username)
-        return False
-    except KeyError:
-        return True
+    with shelve.open("Py_Storage") as db:
+        print("DB keys:", list(db.keys()))
+    with shelve.open("Py_Storage") as db:
+        return username not in db
+    
+
 
 def hash(text, salt): 
     iterations = 50000
@@ -35,7 +36,7 @@ def hash(text, salt):
 class User:
     def __init__(self, username, password):
         self.username = username
-        self.nickname = username
+        self.nickname = username.capitalize()
         self.salt = secrets.token_hex(16)
         self.password = self.encrypt_pass(password)
         self.note_count = 0

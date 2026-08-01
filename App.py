@@ -44,16 +44,16 @@ def sysenter(user_obj):
         exit()
 
 def create_account_button():
-    username = newacountusername.get()   # Make this lower
+    username = newacountusername.get()
+    username = username.lower()
     password1 = newacountpassword1.get()
     password2 = newacountpassword2.get()
     if not is_OK_username(username):
         messagebox.showerror("Invalad Username", 'This username is invalid, try again.')
         return 
     if password1.lower() == password2.lower():
-        user_obj = User(username.lower(), password1.lower())
+        user_obj = User(username, password1.lower())
         save_user(user_obj)
-
         messagebox.showinfo("Success", f"Account ({username}) Created")
         newaccount_row1.pack_forget()
         newaccount_row2.pack_forget()
@@ -64,21 +64,24 @@ def create_account_button():
     
 def login_button():
     username = loginusernamebox.get()
+    username = username.lower()
     password = loginpasswordbox.get()
     if username == "admin":
         root.withdraw()   # hide window
         is_admin()
+        return
     try:
-        user_obj = load_user(username.lower())
-        if user_obj.PassEncrypt(password.lower()) == user_obj.password: 
+        user_obj = load_user(username)
+    except:
+        messagebox.showerror("Error", "No such User")
+        return
+    if user_obj.encrypt_pass(password.lower()) == user_obj.password: 
             login_row1.pack_forget()
             login_row2.pack_forget()
             login_row3.pack_forget()
             sysenter(user_obj)
-        else: 
-            messagebox.showerror("Incorrect Password", "Try again.")
-    except:
-        messagebox.showerror("Error", "No such User")
+    else: 
+        messagebox.showerror("Incorrect Password", "Try again.")
         
 #region  Login_Frame
 tk.Label(login_row1, text="Username ").pack(side="left")
