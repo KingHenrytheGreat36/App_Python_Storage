@@ -3,18 +3,30 @@ import shelve
 import hashlib
 import secrets 
 from datetime import datetime
+import os
 
 
 # This is where all of the user profile stuff goes
-def Log(msg):
-    today = datetime.now().strftime("%m/%d/%y")
-    print(f"{today} {msg}")
+#region ERROR LOGING
+def ensure_folder(path):
+    if not os.path.exists(path):
+        os.makedirs(path)
+
+def Log(msg, type="INFO"):
+    now = datetime.now().strftime("%m/%d/%y %H:%M:%S")
+    day = datetime.now().strftime("%m-%d-%y")
+    ensure_folder("logs")
+    message = f"{now}  [{type}]   {msg}"
+    with open(f"logs/PyStorage_{day}.log", "a") as f:
+        f.write(message + "\n")
 
 def ErrorLog(msg):
-    today = datetime.now().strftime("%m/%d/%y")
-    print(f"{today}\033[91m   Error!: {msg}\033[0m")   # red text
-    Log(msg)
-
+    now = datetime.now().strftime("%m/%d/%y %H:%M:%S")
+    date = datetime.now().strftime("%m-%y")
+    ensure_folder("logs")
+    with open(f"logs/PyStorage_Error_{date}.log", "a") as f:
+        f.write(now +"   [ERROR]  " + msg + "\n")
+    Log(msg, type="ERROR")
 
 
 def load_user(username):
@@ -33,7 +45,8 @@ def is_OK_username(username):       # Fix this in issue #5 !
         return False
     with shelve.open("Py_Storage") as db:
         return username not in db
-    
+
+#endregion
 
 
 def hash(text, salt): 
