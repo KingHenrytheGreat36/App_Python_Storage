@@ -34,17 +34,15 @@ def create_account_frame_start():
     login_frame.pack_forget()
     newaccount_frame.pack()
 def sysenter(user_obj):
-    root.withdraw()   # hide window
+    root.withdraw()
     restart = MainSystem(user_obj)
     if restart:
-        root.deiconify()  # show window again
-        HeadLabel.pack()
-        login_row1.pack()
-        login_row2.pack()
-        login_row3.pack()
-        login_frame.pack() 
-    else: 
+        root.deiconify()
+        newaccount_frame.pack_forget()
+        login_frame.pack()
+    else:
         exit()
+
 def create_account_button():
     username = newacountusername.get()   # Make this lower
     password1 = newacountpassword1.get()
