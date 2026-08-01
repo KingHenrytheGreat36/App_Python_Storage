@@ -41,6 +41,7 @@ def sysenter(user_obj):
         newaccount_frame.pack_forget()
         login_frame.pack()
     else:
+        Log("Exiting due to primary_stystem close detected by sysenter()")
         exit()
 
 def create_account_button():
@@ -50,6 +51,7 @@ def create_account_button():
     password2 = newacountpassword2.get()
     if not is_OK_username(username):
         messagebox.showerror("Invalad Username", 'This username is invalid, try again.')
+        Log(f"Failed to create account due to invalid username: {username}")
         return 
     if password1.lower() == password2.lower():
         user_obj = User(username, password1.lower())
@@ -59,8 +61,13 @@ def create_account_button():
         newaccount_row2.pack_forget()
         newaccount_row3.pack_forget()
         newaccount_row4.pack_forget()
-        sysenter(user_obj)
-    else: messagebox.showerror("Incorrect Password", "Try again")
+        try:
+            sysenter(user_obj)
+        except Exception as e:
+            ErrorLog(f"in sysenter: {e}")
+    else: 
+        messagebox.showerror("Incorrect Password", "Try again")
+        Log("Failed to create account due to password mismatch")
     
 def login_button():
     username = loginusernamebox.get()
@@ -73,13 +80,17 @@ def login_button():
     try:
         user_obj = load_user(username)
     except:
+        Log(f"User {username} not found in login.")
         messagebox.showerror("Error", "No such User")
         return
     if user_obj.encrypt_pass(password.lower()) == user_obj.password: 
             login_row1.pack_forget()
             login_row2.pack_forget()
             login_row3.pack_forget()
-            sysenter(user_obj)
+            try:
+                sysenter(user_obj)
+            except Exception as e:
+                ErrorLog(f"in sysenter: {e}")
     else: 
         messagebox.showerror("Incorrect Password", "Try again.")
         
@@ -109,3 +120,5 @@ tk.Button(newaccount_row4, text="Go", command=create_account_button).pack(pady=5
 
 
 root.mainloop()
+root.wait_window()
+Log("Root window closed.")

@@ -20,6 +20,7 @@ def is_admin():
             AdminAuthWin.destroy()
             admin_control()
         else:
+            Log("Failed admin access code.")
             exit()
     tk.Button(R1, text="Go", command=PressGo).pack(pady=5)
 
@@ -47,16 +48,20 @@ def admin_control():
                     pass
             messagebox.showinfo("Storage Deleted", "Storage Deleted - the aplication will exit")
             os._exit(0)
+            Log("App closed due to storage deletion.")
         else:
             messagebox.showinfo("Aborted", "Aborted - Storage not deleted")
             os._exit(0)
+            Log("App closed due to storage deletion being canceled.")
     def impersonatethis(username):
         user_obj = load_user(username)
         print(username.capitalize() + " should be " + user_obj.username.capitalize())
         restart = MainSystem(user_obj)
         if restart:
+            Log("User impersonatiion closed by logout.")
             pass
         else: 
+            Log("User impersonatiion closed by closing primary_system window, exiting app.")
             exit()
     def openimpersonate():
         for widget in UserList.winfo_children(): # Remove Privious
@@ -94,3 +99,4 @@ def admin_control():
 
 
     AdminWin.wait_window()
+    Log("Admin_Control window closed.")

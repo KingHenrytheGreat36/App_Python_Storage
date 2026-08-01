@@ -1,8 +1,21 @@
+import datetime
 import shelve
 import hashlib
 import secrets 
+from datetime import datetime
+
 
 # This is where all of the user profile stuff goes
+def Log(msg):
+    today = datetime.now().strftime("%m/%d/%y")
+    print(f"{today} {msg}")
+
+def ErrorLog(msg):
+    today = datetime.now().strftime("%m/%d/%y")
+    print(f"{today}\033[91m   Error!: {msg}\033[0m")   # red text
+    Log(msg)
+
+
 
 def load_user(username):
         with shelve.open("Py_Storage") as db:
@@ -13,11 +26,11 @@ def save_user(user_obj):
             db[user_obj.username] = user_obj
 def is_OK_username(username):       # Fix this in issue #5 !
     if username.strip() == "":
+        Log("Invalid username: empty string")
         return False
     if username.strip() == "admin":
+        Log("Invalid username: 'admin' is reserved")
         return False
-    with shelve.open("Py_Storage") as db:
-        print("DB keys:", list(db.keys()))
     with shelve.open("Py_Storage") as db:
         return username not in db
     

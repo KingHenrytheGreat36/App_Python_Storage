@@ -67,6 +67,7 @@ def MainSystem(user_obj):
             user_obj.notes[noteid]["content"] = Note_Content.get("1.0", "end-1c") # Says user_obj has the new note
             save_user(user_obj)
             messagebox.showinfo("Saved", user_obj.notes[noteid]["name"] + " was saved.")
+            Log(f"Note {user_obj.notes[noteid]['name']} saved for {user_obj.username}. Note number: {noteid}")
             ViewNoteScreen.pack_forget()
             return_to_button_screen()
         tk.Button(ViewNoteR2, text="Save Changes", command=lambda: MyNoteSaveNote(noteid)).pack()
@@ -105,7 +106,7 @@ def MainSystem(user_obj):
             notecount = user_obj.add_note(CreateNoteName.get(), content)
             save_user(user_obj)
             messagebox.showinfo(f"Note Created", f"Note, {CreateNoteName.get()}, has been saved for {nickname}.")
-            messagebox.showinfo("Debug", f"(For debuging purposes, it is acualy note {notecount})")
+            Log(f"Note {user_obj.notes[notecount]['name']} created for user {user_obj.username}. Note number: {notecount}")
         CreateNoteScreen.pack_forget()
         return_to_button_screen()
 #endregion
@@ -147,4 +148,6 @@ def MainSystem(user_obj):
 
 
     mainsys.wait_window()   # outer waits here until win closes
+    Log("Primary_System window closed.")
+
     return restart

@@ -1,3 +1,5 @@
+from asyncio import log
+
 from User import *
 import tkinter as tk
 from tkinter import messagebox
@@ -69,7 +71,7 @@ def settings_win(user_obj):
     def save_nickname():
         newnickname = NicknameBox.get()
         oldnickname = user_obj.nickname
-        print(oldnickname + "     " + newnickname)
+        Log(f"Changed {user_obj.username}'s nickname from {oldnickname} to {newnickname}")
         user_obj.nickname = newnickname.capitalize()
         save_user(user_obj)
         messagebox.showinfo("Nickname change", f"Your nickname has been changed from {oldnickname} to {newnickname}.")
@@ -82,16 +84,23 @@ def settings_win(user_obj):
             if yn2:
                 didwork = user_obj.DeleteAcount()
                 if didwork:
+                    Log(f"User {user_obj.username} deleted their account.")
                     messagebox.showinfo("Successful", "Account deleted")
                     time.sleep(3)
+                    Log(f"Application Closed.")
                     messagebox.showwarning("Closing", "Application will close")
                     os._exit(0)
                 else:
+                    ErrorLog(f"User {user_obj.username} failed to delete their account.")
                     messagebox.showinfo("Error", "An error occured. Account not deleted")
             else:
+                ErrorLog(f"User {user_obj.username} cancelled the account deletion.")
+
                 messagebox.showinfo("Aborted", "Aborted - Account not deleted")
         else:
             messagebox.showinfo("Aborted", "Aborted - Account not deleted")
+            ErrorLog(f"User {user_obj.username} cancelled the account deletion.")
+
 
 
     tk.Button(SettingsList, text="Change Password", command=to_change_pass_screen).pack()
@@ -127,4 +136,5 @@ def settings_win(user_obj):
 
 
     SettingsWin.wait_window()   # outer waits here until win closes
+    Log("Settings window closed.")
     return 1
