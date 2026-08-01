@@ -158,6 +158,8 @@ def MainSystem(user_obj):
     tk.Label(AboutR1, text=AboutStuff).pack()
     tk.Button(AboutR2, text="Back", command=fromaboutscreen).pack(pady=10)
 
+    tk.Button(ButtonList, text="E‑STOP", fg="red", command= lambda: os._exit(0)).pack(pady=15)
+
 
     mainsys.wait_window()   # outer waits here until win closes
     Log("Primary_System window closed.")

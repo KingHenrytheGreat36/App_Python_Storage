@@ -1,10 +1,8 @@
-.gitignore
 __pycache__/Settings.cpython-311.pyc
 __pycache__/User.cpython-311.pyc
 __pycache__/Primary_System.cpython-311.pyc
 __pycache__/Admin_Control.cpython-311.pyc
+__pycache__/Notes.cpython-311.pyc
 logs/
 Notes.db
-.gitignore
-.gitignore
-__pycache__/Notes.cpython-311.pyc
+Users.db
