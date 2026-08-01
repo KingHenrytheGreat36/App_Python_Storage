@@ -43,7 +43,7 @@ def admin_control():
         if yn:
             for ext in (".db", ".dat", ".dir"):
                 try:
-                    os.remove("Py_Storage" + ext)
+                    os.remove("Users" + ext)
                 except FileNotFoundError: # Will happen every time, so just ignore
                     pass
             messagebox.showinfo("Storage Deleted", "Storage Deleted - the aplication will exit")
@@ -71,7 +71,7 @@ def admin_control():
         row = 0
         col = 0
         col += 1
-        with shelve.open("Py_Storage") as db:
+        with shelve.open("Users") as db:
             for user in db.keys():       
                 tk.Button(UserList,text=user.capitalize(), command=lambda username=user: impersonatethis(username)).grid(row=row, column=col, padx=5, pady=5)
                 col += 1

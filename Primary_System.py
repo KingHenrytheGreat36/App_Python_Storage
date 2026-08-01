@@ -1,3 +1,4 @@
+from Notes import Note, load_note, save_note
 from User import *
 import tkinter as tk
 from tkinter import messagebox
@@ -55,22 +56,26 @@ def MainSystem(user_obj):
         for widget in ViewNoteR2.winfo_children():  # Remove stuff that was there before
             widget.destroy()
 
-        note = user_obj.notes[noteid] # Get note
+        note = load_note(noteid) # Get note
         NotesList.pack_forget()
         ViewNoteScreen.pack()
-        HeadLabel.config(text="Note " + note["name"])
+        HeadLabel.config(text="Note " + note.name)
         Note_Content = tk.Text(ViewNoteR1, width=40,height=8)
         Note_Content.pack()
-        Note_Content.insert("1.0", note["content"])
+        Note_Content.insert("1.0", note.content)
         def MyNoteSaveNote(noteid):
+            Log(f"Open note function not finished. Note ID: {noteid}")
             content = Note_Content.get("1.0", "end-1c")
-            user_obj.notes[noteid]["content"] = Note_Content.get("1.0", "end-1c") # Says user_obj has the new note
-            save_user(user_obj)
-            messagebox.showinfo("Saved", user_obj.notes[noteid]["name"] + " was saved.")
-            Log(f"Note {user_obj.notes[noteid]['name']} saved for {user_obj.username}. Note number: {noteid}")
+            note = load_note(noteid)
+            note.content = Note_Content.get("1.0", "end-1c") # Says user_obj has the new note
+            save_note(note)
+            messagebox.showinfo("Saved", note.name + " was saved.")
+            Log(f"Note {note.name} saved for {note.owner}. Note number: {note.id}")
             ViewNoteScreen.pack_forget()
-            return_to_button_screen()
+            notes_button()
         tk.Button(ViewNoteR2, text="Save Changes", command=lambda: MyNoteSaveNote(noteid)).pack()
+
+
     def notes_button():
         for widget in NotesList.winfo_children(): # Remove Privious
             widget.destroy()
@@ -78,13 +83,20 @@ def MainSystem(user_obj):
         HeadLabel.config(text="My Notes - Choose a note to view/edit") # Create Header
         row = 0
         col = 0
+        tk.Button(NotesList, text="Back", command=lambda: [NotesList.pack_forget(), return_to_button_screen()]).grid(row=row, column=col, padx=5, pady=5)
+        col += 1
         tk.Button( NotesList,text="Create New", command=create_notes_screen).grid(row=row, column=col, padx=5, pady=5)
         col += 1
         if col == 5:
             col = 0
             row += 1
-        for noteid, note in user_obj.notes.items():
-            tk.Button(NotesList,text=note["name"], command=lambda n=noteid: open_note(n)).grid(row=row, column=col, padx=5, pady=5)
+        for noteid in user_obj.notes:
+            note = load_note(noteid)
+            tk.Button(
+                NotesList,
+                text=note.name.capitalize(),
+                command=lambda n=noteid: open_note(n)
+            ).grid(row=row, column=col, padx=5, pady=5)
             col += 1
             if col == 5:
                 col = 0
@@ -97,16 +109,16 @@ def MainSystem(user_obj):
     def create_note_button():
         nonlocal user_obj
         content = CreateNoteText.get("1.0", "end-1c")
-        username = user_obj.username.lower()
         nickname = user_obj.nickname
         if CreateNoteName.get() == "":
             messagebox.showerror("Missing Content", "Write a note name")
         else:
-            user_obj = load_user(username) 
-            notecount = user_obj.add_note(CreateNoteName.get(), content)
+            note = Note(CreateNoteName.get(), content, user_obj.username)
+            save_note(note)
+            user_obj.notes.append(note.id)
             save_user(user_obj)
-            messagebox.showinfo(f"Note Created", f"Note, {CreateNoteName.get()}, has been saved for {nickname}.")
-            Log(f"Note {user_obj.notes[notecount]['name']} created for user {user_obj.username}. Note number: {notecount}")
+            messagebox.showinfo(f"Note Created", f"Note, {note.name}, has been saved for {nickname}.")
+            Log(f"Note {note.id} created for user {note.owner}.")
         CreateNoteScreen.pack_forget()
         return_to_button_screen()
 #endregion

@@ -30,11 +30,11 @@ def ErrorLog(msg):
 
 
 def load_user(username):
-        with shelve.open("Py_Storage") as db:
+        with shelve.open("Users") as db:
             return db[username]
 
 def save_user(user_obj):
-        with shelve.open("Py_Storage") as db:
+        with shelve.open("Users") as db:
             db[user_obj.username] = user_obj
 def is_OK_username(username):       # Fix this in issue #5 !
     if username.strip() == "":
@@ -43,7 +43,7 @@ def is_OK_username(username):       # Fix this in issue #5 !
     if username.strip() == "admin":
         Log("Invalid username: 'admin' is reserved")
         return False
-    with shelve.open("Py_Storage") as db:
+    with shelve.open("Users") as db:
         return username not in db
 
 #endregion
@@ -65,8 +65,8 @@ class User:
         self.nickname = username.capitalize()
         self.salt = secrets.token_hex(16)
         self.password = self.encrypt_pass(password)
-        self.note_count = 0
-        self.notes = {}
+        self.notes = []   # list of note IDs
+
 
     def add_note(self, title, content):
         self.note_count += 1
@@ -85,7 +85,7 @@ class User:
     def delete_acount(self):
         username = self.username.lower()
 
-        with shelve.open("Py_Storage") as db:
+        with shelve.open("Users") as db:
             if username in db:
                 del db[username]
                 return True

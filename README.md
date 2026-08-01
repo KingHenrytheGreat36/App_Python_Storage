@@ -23,7 +23,7 @@ This project is currently in development as of July 16, 2026.
 - Better UI (Modern)
 
 ## Why I Built This
-I (@KingHenrytheGreat36) built this project to re-learn Python, learn Tkinter, storage systems, and secure password handling. 
+I, KingHenrytheGreat36, built this project to re-learn Python, learn Tkinter, storage systems, and secure password handling. 
 It started as a simple test project and will continue to grow as I learn more about programming. I am working on an HTML linguistics project, too. There is a consol version of this at KingHenrytheGreat36/
 Python_Storage
 
