@@ -55,7 +55,6 @@ def admin_control():
             Log("App closed due to storage deletion being canceled.")
     def impersonatethis(username):
         user_obj = load_user(username)
-        print(username.capitalize() + " should be " + user_obj.username.capitalize())
         restart = MainSystem(user_obj)
         if restart:
             Log("User impersonatiion closed by logout.")

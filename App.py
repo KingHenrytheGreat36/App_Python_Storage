@@ -1,9 +1,9 @@
-import tkinter as tk
-from tkinter import messagebox
 from Primary_System import MainSystem
 from User import *
 from Admin_Control import is_admin
 try:
+    import tkinter as tk
+    from tkinter import messagebox
 
     root = tk.Tk()
     root.title("Python Storage")
@@ -91,7 +91,7 @@ try:
                 try:
                     sysenter(user_obj)
                 except Exception as e:
-                    ErrorLog(f"in sysenter: {e}")
+                    ErrorLog(f"in sysenter: {e}", "")
         else: 
             messagebox.showerror("Incorrect Password", "Try again.")
             

@@ -143,6 +143,9 @@ def MainSystem(user_obj):
     tk.Button(ButtonList, text="About", command=to_about_screen).pack(pady=15)
     tk.Button(ButtonList, text=f"{user_obj.username.capitalize()}'s Settings", command=settingsbutton).pack(pady=15)
     tk.Button(ButtonList, text="Log out", command=logout).pack(pady=15)
+    if user_obj.testsetting:
+        tk.Button(ButtonList, text="Test Setting", command=lambda: messagebox.showinfo("Test Setting", "This is a test setting.")).pack(pady=15)
+
 
     # Create Note Screen
     tk.Label(CreateNoteR1, text="Note Name   ").pack(side="left")
@@ -157,8 +160,10 @@ def MainSystem(user_obj):
     AboutStuff = "This is a simple storage system written in Python.\nThis was created by @HenrytheGreat36 on Github.\nThis is a app version of a previous console version by the same name.\nAs you know, you can make an acount to store notes."
     tk.Label(AboutR1, text=AboutStuff).pack()
     tk.Button(AboutR2, text="Back", command=fromaboutscreen).pack(pady=10)
-
-    tk.Button(ButtonList, text="E‑STOP", fg="red", command= lambda: os._exit(0)).pack(pady=15)
+    def Estop():
+        ErrorLog("E‑STOP triggered.", "CRITICAL")
+        os._exit(0)
+    tk.Button(ButtonList, text="E‑STOP", fg="red", command=Estop).pack(pady=15)
 
 
     mainsys.wait_window()   # outer waits here until win closes

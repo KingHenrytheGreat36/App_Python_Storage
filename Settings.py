@@ -100,11 +100,29 @@ def settings_win(user_obj):
         else:
             messagebox.showinfo("Aborted", "Aborted - Account not deleted")
             ErrorLog(f"User {user_obj.username} cancelled the account deletion.")
+    def changesecretnotesallowed():
+        if user_obj.secretnotesallowed:
+            user_obj.secretnotesallowed = False
+            Log(f"User {user_obj.username} turned secretnotesallowed off.")
+            SecretNoteAllowedButton.config(text="Turn secret notes on")
+        else:
+            user_obj.secretnotesallowed = True
+            Log(f"User {user_obj.username} turned secretnotesallowed on.")
+            SecretNoteAllowedButton.config(text="Turn secret notes off")
+
+        save_user(user_obj)
 
 
 
     tk.Button(SettingsList, text="Change Password", command=to_change_pass_screen).pack()
     tk.Button(SettingsList, text="Change Nickname", command=to_nickname_change).pack(pady=10)
+    if user_obj.secretnotesallowed:
+        secretnotesallowed = "Turn secret notes off"
+    else:
+        secretnotesallowed = "Turn secret notes on"
+    SecretNoteAllowedButton = tk.Button(SettingsList, text=f"{secretnotesallowed}", command=changesecretnotesallowed)
+    SecretNoteAllowedButton.pack(pady=10)
+
     tk.Label(SettingsList, text="").pack()
     tk.Label(SettingsList, text="").pack()
     tk.Button(SettingsList, text="Delete Acount", command=delacount).pack()

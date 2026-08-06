@@ -1,32 +1,9 @@
-import datetime
 import shelve
 import hashlib
 import secrets 
-from datetime import datetime
 import os
 
-
 # This is where all of the user profile stuff goes
-#region ERROR LOGING
-def ensure_folder(path):
-    if not os.path.exists(path):
-        os.makedirs(path)
-
-def Log(msg, type="INFO"):
-    now = datetime.now().strftime("%m/%d/%y %H:%M:%S")
-    day = datetime.now().strftime("%m-%d-%y")
-    ensure_folder("logs")
-    message = f"{now}  [{type}]   {msg}"
-    with open(f"logs/PyStorage_{day}.log", "a") as f:
-        f.write(message + "\n")
-
-def ErrorLog(msg):
-    now = datetime.now().strftime("%m/%d/%y %H:%M:%S")
-    date = datetime.now().strftime("%m-%y")
-    ensure_folder("logs")
-    with open(f"logs/PyStorage_Error_{date}.log", "a") as f:
-        f.write(now +"   [ERROR]  " + msg + "\n")
-    Log(msg, type="ERROR")
 
 
 def load_user(username):
@@ -46,8 +23,6 @@ def is_OK_username(username):       # Fix this in issue #5 !
     with shelve.open("Users") as db:
         return username not in db
 
-#endregion
-
 
 def hash(text, salt): 
     iterations = 50000
@@ -66,6 +41,8 @@ class User:
         self.salt = secrets.token_hex(16)
         self.password = self.encrypt_pass(password)
         self.notes = []   # list of note IDs
+        self.secretnotesallowed = False
+
 
 
     def add_note(self, title, content):
@@ -91,3 +68,28 @@ class User:
                 return True
             else:
                 return False
+
+import datetime
+from datetime import datetime
+
+
+
+def ensure_folder(path):
+    if not os.path.exists(path):
+        os.makedirs(path)
+
+def Log(msg, type="INFO"):
+    now = datetime.now().strftime("%m/%d/%y %H:%M:%S")
+    day = datetime.now().strftime("%m-%d-%y")
+    ensure_folder("logs")
+    message = f"{now}  [{type}]   {msg}"
+    with open(f"logs/PyStorage_{day}.log", "a") as f:
+        f.write(message + "\n")
+
+def ErrorLog(msg, type="ERROR"):
+    now = datetime.now().strftime("%m/%d/%y %H:%M:%S")
+    date = datetime.now().strftime("%m-%y")
+    ensure_folder("logs")
+    with open(f"logs/PyStorage_Error_{date}.log", "a") as f:
+        f.write(f"{now}   [{type}]  {msg}\n")
+    Log(msg, type=type)
